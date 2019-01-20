@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" href="../bower_components/spectre.css/dist/spectre.min.css">
+</head>
+<body>
+  <div>
+    <div class="form-group">
+      <label for="next_game_name" for="stream_name">Stream Name</label>
+      <input type="text" class="form-input" id="stream_name" />
+    	<label for="game_name"for="game_name">Game Name</label>
+    	<input type="text" class="form-input" id="game_name" />
+      <label for="next_game_name"for="next_game_name">Next Game Name</label>
+      <input type="text" class="form-input" id="next_game_name" />
+      <label for="donation_link"for="donation_link">Donation Link (Shortened)</label>
+      <input type="text" class="form-input" id="donation_link" />
+    </div>
+
+    <button class="game-update btn btn-primary btn-block">Update</button>
+  </div>
+
+  <div class="form-group">
+    <label for="timer">Timer (Countdown)</label>
+    <input  class="form-input" type="text"id="timer" readonly   />
+  </div>
+
+  <button class="timer-start btn btn-success btn-block">Start</button>
+  <button class="timer-pause btn btn-warning btn-block" style="display: none;">Pause</button>
+
+  <div class="form-group">
+    <label for="adjust_timer">Adjust Timer To:</label>
+    <input type="text" class="form-input" id="adjust_timer" value="00:00:00" />
+  </div>
+
+  <button class="adjust-timer-btn btn btn-primary btn-block">Set Timer</button>
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/1.4.5/numeral.min.js"></script>
+  <script>
+    'use strict';
+
+    const currentGame       = nodecg.Replicant('current-game', { defaultValue: '' }),
+          nextGame          = nodecg.Replicant('next-game', { defaultValue: '' }),
+          streamName        = nodecg.Replicant('stream-name', { defaultValue: '' }),
+          donationLink      = nodecg.Replicant('donation-link', { defaultValue: '' }),
+          timerValue        = nodecg.Replicant('timerValue', { defaultValue : 24 * 60 * 60 }),
+          timerDisplayValue = nodecg.Replicant('timerDisplayValue', { defaultValue : 24 * 60 * 60 }),
+          timerPaused       = nodecg.Replicant('timerPaused', { defaultValue : true, persistent: false }),
+          timerNegative     = nodecg.Replicant('timerNegative', { defaultValue : false });
+
+    currentGame.on('change', newValue => {
+      document.querySelector('#game_name').value = newValue;
+    });
+
+    nextGame.on('change', newValue => {
+      document.querySelector('#next_game_name').value = newValue;
+    });
+
+    streamName.on('change', newValue => {
+      document.querySelector('#stream_name').value = newValue;
+    });
+
+    donationLink.on('change', newValue => {
+      document.querySelector('#donation_link').value = newValue;
+    });
+
+    timerNegative.on('change', newValue => {
+      const tm = document.querySelector('#timer').value;
+
+      if (newValue && tm.length > 0 && tm[0] !== '-') {
+        document.querySelector('#timer').value = '-' + tm;
+      } else if (!newValue && tm.length > 0 && tm[0] === '-') {
+        document.querySelector('#timer').value = tm.slice(1);
+      }
+    })
+
+    timerDisplayValue.on('change', newValue => {
+      let time = numeral(newValue).format('00:00:00');
+
+      if (timerNegative.value) {
+        time = '-' + time;
+      }
+
+      document.querySelector('#timer').value = time;
+    });
+
+    timerPaused.on('change', newValue => {
+      if (newValue === false) {
+        document.querySelector('.timer-pause').style.display = 'block';
+        document.querySelector('.timer-start').style.display = 'none';
+      } else {
+        document.querySelector('.timer-pause').style.display = 'none';
+        document.querySelector('.timer-start').style.display = 'block';
+      }
+    });
+
+    document.querySelector('.game-update').addEventListener('click', function(e) {
+      e.preventDefault();
+      streamName.value = document.querySelector('#stream_name').value;
+      currentGame.value = document.querySelector('#game_name').value;
+      nextGame.value = document.querySelector('#next_game_name').value;
+      donationLink.value = document.querySelector('#donation_link').value;
+
+      document.querySelector('.game-update').innerText = 'Updated!';
+
+      setTimeout(() => {
+        document.querySelector('.game-update').innerText = 'Update';
+      }, 1000);
+    });
+
+    document.querySelector('.timer-start').addEventListener('click', function(e) {
+      e.preventDefault();
+      nodecg.sendMessage('startTimer');
+    });
+
+    document.querySelector('.timer-pause').addEventListener('click', function(e) {
+      e.preventDefault();
+      nodecg.sendMessage('stopTimer');
+    });
+
+    document.querySelector('.adjust-timer-btn').addEventListener('click', function(e) {
+      e.preventDefault();
+
+      nodecg.sendMessage('setTimer',  numeral().unformat(document.querySelector('#adjust_timer').value));
+    });
+  </script>
+</body>
+</html>

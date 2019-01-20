@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" href="../bower_components/spectre.css/dist/spectre.min.css">
+</head>
+<body>
+  <div class="form-group">
+  	<label class="form-label" for="extralife_id">Extra Life ID</label>
+  	<input class="form-input" type="text" id="extralife_id" />
+
+  	<label class="form-label" for="extralife_team_id">Extra Life Team ID</label>
+  	<input class="form-input" type="text" id="extralife_team_id" />
+  </div>
+
+  <button class="ctrl-update btn btn-primary btn-block">Update</button>
+
+	<script>
+    'use strict';
+
+    const extraLifeId     = nodecg.Replicant('extralife-id', { defaultValue: 0 }),
+          extraLifeTeamId = nodecg.Replicant('extralife-team-id', { defaultValue: 0 });
+
+    extraLifeId.on('change', newValue => {
+    	document.querySelector('#extralife_id').value = newValue;
+    });
+
+    extraLifeTeamId.on('change', newValue => {
+    	document.querySelector('#extralife_team_id').value = newValue;
+    });
+
+    document.querySelector('.ctrl-update').addEventListener('click', function(e) {
+    	e.preventDefault();
+
+    	extraLifeId.value = document.querySelector('#extralife_id').value;
+    	extraLifeTeamId.value = document.querySelector('#extralife_team_id').value;
+
+      document.querySelector('.ctrl-update').innerText = 'Updated!';
+
+      setTimeout(() => {
+        document.querySelector('.ctrl-update').innerText = 'Update';
+      }, 1000);
+    });
+	</script>
+</body>
+</html>

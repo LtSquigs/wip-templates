@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" href="../bower_components/spectre.css/dist/spectre.min.css">
+</head>
+<body>
+  <div>
+  	<b>Team Goal:</b>
+    <span id="teamGoal">0</span>
+  </div>
+  <div>
+  	<b>Team Raised:</b>
+    <span id="teamRaised">0</span>
+  </div>
+  <div>
+    <b>Your Goal:</b>
+    <span id="yourGoal">0</span>
+  </div>
+  <div>
+    <b>Your Raised:</b>
+    <span id="yourRaised">0</span>
+  </div>
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/1.4.5/numeral.min.js"></script>
+	<script>
+    'use strict';
+
+    const teamGoal   = nodecg.Replicant('team-goal', { defaultValue: 0, persistent: false }),
+          teamRaised = nodecg.Replicant('team-raised', { defaultValue: 0, persistent: false }),
+          yourGoal   = nodecg.Replicant('your-goal', { defaultValue: 0, persistent: false }),
+          yourRaised = nodecg.Replicant('your-raised', { defaultValue: 0, persistent: false });
+
+    teamGoal.on('change', newValue => {
+      document.querySelector('#teamGoal').innerText = numeral(newValue).format('$0,0.00');
+    });
+
+    teamRaised.on('change', newValue => {
+      document.querySelector('#teamRaised').innerText = numeral(newValue).format('$0,0.00');
+    });
+    yourGoal.on('change', newValue => {
+      document.querySelector('#yourGoal').innerText = numeral(newValue).format('$0,0.00');
+    });
+    yourRaised.on('change', newValue => {
+      document.querySelector('#yourRaised').innerText = numeral(newValue).format('$0,0.00');
+    });
+	</script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+{
+  "name": "giantbomb-extralife-nodecg",
+  "version": "0.0.0",
+  "description": "",
+  "homepage": "",
+  "author": {
+    "name": "Ian Kelly",
+    "email": "ltsquigs@gmail.com",
+    "url": ""
+  },
+  "files": [
+    "dashboard",
+    "graphics",
+    "extension.js",
+    "extension"
+  ],
+  "keywords": [
+    "",
+    "nodecg-bundle"
+  ],
+  "nodecg": {
+    "compatibleRange": "^1.1.1",
+    "dashboardPanels": [
+      {
+        "name": "totals",
+        "title": "Extra Life Totals",
+        "width": 2,
+        "file": "totals.html",
+        "headerColor": "#525F78"
+      },
+      {
+        "name": "configuration",
+        "title": "Extra Life Configuration",
+        "width": 2,
+        "file": "configuration.html",
+        "headerColor": "#525F78"
+      },
+      {
+        "name": "component-settings",
+        "title": "Component Settings",
+        "width": 2,
+        "file": "components.html",
+        "headerColor": "#525F78"
+      },
+      {
+        "name": "stream-controls",
+        "title": "Stream Controls",
+        "width": 2,
+        "file": "controls.html",
+        "headerColor": "#525F78"
+      },
+      {
+        "name": "donation-controls",
+        "title": "Donation Controls",
+        "width": 2,
+        "file": "donation-controls.html",
+        "headerColor": "#525F78"
+      },
+      {
+        "name": "donations",
+        "title": "Donations",
+        "width": 4,
+        "file": "donations.html",
+        "headerColor": "#525F78"
+      }
+    ],
+    "graphics": [
+      {
+        "file": "index.html",
+        "width": 1280,
+        "height": 720
+      }
+    ]
+  },
+  "repository": "https://github.com/nodecg/nodecg.git",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "extra-life-api": "^5.2.0",
+    "md5": "^2.2.1",
+    "numeral": "^2.0.6",
+    "request-promise-native": "^1.0.5"
+  }
+}

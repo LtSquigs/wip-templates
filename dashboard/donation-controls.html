@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" href="../bower_components/spectre.css/dist/spectre.min.css">
+</head>
+<body>
+  <div class="form-group">
+    <label class="form-switch" for="show_donation_comments">
+      <input type="checkbox" id="show_donation_comments">
+      <i class="form-icon"></i> Show Donation Comments
+    </label>
+    <label class="form-switch" for="require_donation_approval">
+      <input type="checkbox" id="require_donation_approval">
+      <i class="form-icon"></i> Require Donation Approval
+    </label>
+    <label class="form-switch" for="require_minimum_donation">
+      <input type="checkbox" id="require_minimum_donation">
+      <i class="form-icon"></i> Require Minimum (USD)
+    </label>
+    <input type="text" id="minimum_donation_amount" class="form-input">
+    <label class="form-switch" for="donation_profanity_filter">
+      <input type="checkbox" id="donation_profanity_filter">
+      <i class="form-icon"></i> Profanity Filter
+    </label>
+    <label class="form-label">Custom Filter Words (seperated by comma)</label>
+    <textarea id="custom_profanity_filter" class="form-input" placeholder="badword, badword2, ..." rows="3"></textarea>
+  </div>
+
+  <script>
+    'use strict';
+
+    const showDonationComments    = nodecg.Replicant('show-donation-comments', { defaultValue : true }),
+          requireDonationApproval = nodecg.Replicant('require-donation-approval', { defaultValue : false }),
+          requireMinimumDonation  = nodecg.Replicant('require-minimum-donation', { defaultValue : false }),
+          donationProfanityFilter = nodecg.Replicant('profanity-donation-filter', { defaultValue : false }),
+          minimumDoantionAmount   = nodecg.Replicant('minimum-donation-amount', { defaultValue : '1.00' }),
+          customProfanityWords    = nodecg.Replicant('custom-profanity-filter', { defaultValue : '' });
+
+    showDonationComments.on('change', newValue => {
+      document.querySelector('#show_donation_comments').checked = newValue;
+    });
+
+    requireDonationApproval.on('change', newValue => {
+      document.querySelector('#require_donation_approval').checked = newValue;
+    });
+
+    donationProfanityFilter.on('change', newValue => {
+      document.querySelector('#donation_profanity_filter').checked = newValue;
+    });
+
+    requireMinimumDonation.on('change', newValue => {
+      document.querySelector('#require_minimum_donation').checked = newValue;
+    });
+
+    minimumDoantionAmount.on('change', newValue => {
+      document.querySelector('#minimum_donation_amount').value = newValue;
+    });
+
+    customProfanityWords.on('change', newValue => {
+      document.querySelector('#custom_profanity_filter').value = newValue;
+    });
+
+    document.querySelector('#show_donation_comments').addEventListener('change', e => {
+      showDonationComments.value = e.target.checked;
+    });
+
+    document.querySelector('#require_donation_approval').addEventListener('change', e => {
+      requireDonationApproval.value = e.target.checked;
+    });
+
+    document.querySelector('#require_minimum_donation').addEventListener('change', e => {
+      requireMinimumDonation.value = e.target.checked;
+    });
+
+    document.querySelector('#donation_profanity_filter').addEventListener('change', e => {
+      donationProfanityFilter.value = e.target.checked;
+    });
+
+    document.querySelector('#minimum_donation_amount').addEventListener('change', e => {
+      minimumDoantionAmount.value = e.target.value;
+    });
+
+    document.querySelector('#custom_profanity_filter').addEventListener('change', e => {
+      customProfanityWords.value = e.target.value;
+    });
+  </script>
+</body>
+</html>

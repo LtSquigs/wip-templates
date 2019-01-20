@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" href="../bower_components/spectre.css/dist/spectre.min.css">
+</head>
+<body>
+  <div id="components">
+    <h5>Font Colors - <a href="#" id="showHideColors">Show</a></h5>
+
+    <div style="display: none;" id="colorContainer">
+      <span class="label label-secondary">These settings do not affect the pre-built templates, only components.</span>
+
+      <form class="form-horizontal">
+        <div class="form-group">
+          <div class="col-9">
+            <label class="form-label" for="default_text_color">Default Text</label>
+          </div>
+          <div class="col-3">
+            <input type="color" id="default_text_color" value="#FFFFFF">
+          </div>
+          <div class="col-9">
+            <label class="form-label" for="donation_amount_text_color">Donation Amount Text</label>
+          </div>
+          <div class="col-3">
+            <input type="color" id="donation_amount_text_color" value="#00e1ff">
+          </div>
+          <div class="col-9">
+            <label class="form-label" for="donation_link_text_color">Donation Link Text</label>
+          </div>
+          <div class="col-3">
+            <input type="color" id="donation_link_text_color" value="#FFFF00">
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <hr/>
+
+    <h5>Font Sizes - <a href="#" id="showHideFonts">Show</a></h5>
+
+    <div style="display: none;" id="fontContainer">
+      <span class="label label-secondary">These settings do not affect the pre-built templates, only components.</span>
+
+      <form class="form-horizontal">
+        <div class="form-group">
+          <div class="col-7">
+            <label class="form-label" for="game_name_font_size">Game Name</label>
+          </div>
+          <div class="col-5">
+            <input type="number" class="form-input" id="game_name_font_size" value="24">
+          </div>
+          <div class="col-7">
+            <label class="form-label" for="next_game_font_size">Next Game</label>
+          </div>
+          <div class="col-5">
+            <input type="number" class="form-input" id="next_game_font_size" value="10">
+          </div>
+          <div class="col-7">
+            <label class="form-label" for="stream_name_font_size">Stream Name</label>
+          </div>
+          <div class="col-5">
+            <input type="number" class="form-input" id="stream_name_font_size" value="18">
+          </div>
+          <div class="col-7">
+            <label class="form-label" for="donation_link_font_size">Donation Link</label>
+          </div>
+          <div class="col-5">
+            <input type="number" class="form-input" id="donation_link_font_size" value="18">
+          </div>
+          <div class="col-7">
+            <label class="form-label" for="timer_font_size">Timer</label>
+          </div>
+          <div class="col-5">
+            <input type="number" class="form-input" id="timer_font_size" value="26">
+          </div>
+          <div class="col-7">
+            <label class="form-label" for="stream_raised_font_size">Stream Raised</label>
+          </div>
+          <div class="col-5">
+            <input type="number" class="form-input" id="stream_raised_font_size" value="24">
+          </div>
+          <div class="col-7">
+            <label class="form-label" for="stream_total_font_size">Stream Total</label>
+          </div>
+          <div class="col-5">
+            <input type="number" class="form-input" id="stream_total_font_size" value="24">
+          </div>
+          <div class="col-7">
+            <label class="form-label" for="team_raised_font_size">Team Raised</label>
+          </div>
+          <div class="col-5">
+            <input type="number" class="form-input" id="team_raised_font_size" value="24">
+          </div>
+          <div class="col-7">
+            <label class="form-label" for="team_total_font_size">Team Total</label>
+          </div>
+          <div class="col-5">
+            <input type="number" class="form-input" id="team_total_font_size" value="24">
+          </div>
+          <div class="col-7">
+            <label class="form-label" for="donations_font_size">Donations</label>
+          </div>
+          <div class="col-5">
+            <input type="number" class="form-input" id="donations_font_size" value="18">
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <button class="components-update btn btn-primary btn-block">Update</button>
+  </div>
+
+	<script>
+    "use strict";
+
+    const componentTextColor      = nodecg.Replicant('component-text-color', { defaultValue : '#ffffff' }),
+          donationAmountTextColor = nodecg.Replicant('donation-amount-text-color', { defaultValue : '#00e1ff' }),
+          donationLinkTextColor   = nodecg.Replicant('donation-link-text-color', { defaultValue : '#ffff00' }),
+          fontSizes = nodecg.Replicant('font-sizes', { defaultValue : {
+            gameName: 24,
+            nextGame: 10,
+            streamName: 18,
+            donationLink: 18,
+            timer: 26,
+            streamRaised: 24,
+            streamTotal: 24,
+            teamRaised: 24,
+            teamTotal: 24,
+            donations: 18
+          }});
+
+    donationAmountTextColor.on('change', newValue => {
+      document.querySelector('#donation_amount_text_color').value = newValue;
+    });
+
+    donationLinkTextColor.on('change', newValue => {
+      document.querySelector('#donation_link_text_color').value = newValue;
+    });
+
+    componentTextColor.on('change', newValue => {
+      document.querySelector('#default_text_color').value = newValue;
+    });
+
+    fontSizes.on('change', newValue => {
+      document.querySelector('#game_name_font_size').value = (newValue.gameName);
+      document.querySelector('#next_game_font_size').value = (newValue.nextGame);
+      document.querySelector('#stream_name_font_size').value = (newValue.streamName);
+      document.querySelector('#donation_link_font_size').value = (newValue.donationLink);
+      document.querySelector('#timer_font_size').value = (newValue.timer);
+      document.querySelector('#stream_raised_font_size').value = (newValue.streamRaised);
+      document.querySelector('#stream_total_font_size').value = (newValue.streamTotal);
+      document.querySelector('#team_raised_font_size').value = (newValue.teamRaised);
+      document.querySelector('#team_total_font_size').value = (newValue.teamTotal);
+      document.querySelector('#donations_font_size').value = (newValue.donations);
+    });
+
+    document.querySelector('.components-update').addEventListener('click', function(e) {
+      e.preventDefault();
+
+      componentTextColor.value = document.querySelector('#default_text_color').value;
+      donationAmountTextColor.value = document.querySelector('#donation_amount_text_color').value;
+      donationLinkTextColor.value = document.querySelector('#donation_link_text_color').value;
+
+      fontSizes.value.gameName = document.querySelector('#game_name_font_size').value;
+      fontSizes.value.nextGame = document.querySelector('#next_game_font_size').value;
+      fontSizes.value.streamName = document.querySelector('#stream_name_font_size').value;
+      fontSizes.value.donationLink = document.querySelector('#donation_link_font_size').value;
+      fontSizes.value.timer = document.querySelector('#timer_font_size').value;
+      fontSizes.value.streamRaised = document.querySelector('#stream_raised_font_size').value;
+      fontSizes.value.streamTotal = document.querySelector('#stream_total_font_size').value;
+      fontSizes.value.teamRaised = document.querySelector('#team_raised_font_size').value;
+      fontSizes.value.teamTotal = document.querySelector('#team_total_font_size').value;
+      fontSizes.value.donations = document.querySelector('#donations_font_size').value;
+
+      document.querySelector('.components-update').innerText = 'Updated!';
+
+      setTimeout(() => {
+        document.querySelector('.components-update').innerText = 'Update';
+      }, 1000);
+    });
+
+    document.querySelector('#showHideColors').addEventListener('click', function(e) {
+      e.preventDefault();
+
+      document.querySelector('#showHideColors').innerText = (document.querySelector('#showHideColors').innerText === 'Show' ? 'Hide' : 'Show');
+
+      document.querySelector('#colorContainer').style.display = (document.querySelector('#colorContainer').style.display === 'none' ? 'block' : 'none');
+    });
+
+    document.querySelector('#showHideFonts').addEventListener('click', function(e) {
+      e.preventDefault();
+
+      document.querySelector('#showHideFonts').innerText = (document.querySelector('#showHideFonts').innerText === 'Show' ? 'Hide' : 'Show');
+
+      document.querySelector('#fontContainer').style.display = (document.querySelector('#fontContainer').style.display === 'none' ? 'block' : 'none');
+    });
+	</script>
+</body>
+</html>

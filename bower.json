@@ -1,0 +1,24 @@
+{
+  "name": "giantbomb-extralife-nodecg",
+  "description": "",
+  "main": "",
+  "authors": [
+    "[object Object]"
+  ],
+  "license": "Apache-2.0",
+  "keywords": [
+    "nodecg-bundle"
+  ],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bulma": "^0.7.2",
+    "spectre.css": "spectre#^0.5.8"
+  }
+}
